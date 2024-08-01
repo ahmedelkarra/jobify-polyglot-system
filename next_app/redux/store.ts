@@ -5,10 +5,12 @@ import { useDispatch } from 'react-redux';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 import counterReducer from './counterSlice';
+import registerSlice from './registerSlice';
 
 const store = configureStore({
   reducer: {
     counter: counterReducer,
+    auth: registerSlice,
   },
 });
 
