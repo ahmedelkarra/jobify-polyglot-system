@@ -26,7 +26,7 @@ export const counterSlice = createSlice({
     submitRegister: (state, payload) => {
       state = payload.payload
       console.log(state)
-      axiosForm.post('/register', state)
+      axiosForm.post('/register/', state)
         .then((e) => {
           console.log(e.data)
         })
