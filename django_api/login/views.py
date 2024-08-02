@@ -23,6 +23,6 @@ def login_api(request):
             else:
                 return JsonResponse({'message': 'Worng username or password'}, status=404)                    
         except:
-            return JsonResponse({'message': 'Invalid JSON'}, status=400)
+            return JsonResponse({'message': 'Worng username or password'}, status=404) 
     else:
         return JsonResponse({'message':'Method not allowed'},status=405)
