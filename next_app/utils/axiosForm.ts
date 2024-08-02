@@ -6,4 +6,5 @@ const host = process.env.NEXT_PUBLIC_DJANGO_HOST
 
 export const axiosForm = axios.create({
     baseURL: `${host}/api/auth`,
+    withCredentials: true
 })
