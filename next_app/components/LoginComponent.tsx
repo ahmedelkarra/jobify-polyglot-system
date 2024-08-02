@@ -1,13 +1,17 @@
 'use client'
+import { submitLogin } from '@/redux/loginSlice'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 function LoginComponent() {
   const [valueInputs, setValueInputs] = useState({ username: "", password: "" })
+  const dispatch = useDispatch()
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(valueInputs)
+    dispatch(submitLogin(valueInputs))
   }
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
