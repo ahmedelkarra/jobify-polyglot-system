@@ -1,5 +1,5 @@
 import { axiosForm } from '@/utils/axiosForm';
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export interface IUserSlice {
   first_name: string;
@@ -13,26 +13,34 @@ const initialState: IUserSlice = {
   last_name: "",
   username: "",
   email: "",
-}
+};
+
+export const fetchUserInfo = createAsyncThunk<IUserSlice, void>(
+  'me/fetchUserInfo',
+  async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await axiosForm.get('/me/', { headers: { Authorization: `${token}` } });
+      return response.data as IUserSlice;
+    } catch (error:any) {
+      return rejectWithValue(error.response ? error.response.data : error.message);
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: 'me',
   initialState,
-  reducers: {
-    userInfo: (state) => {
-      console.log(state)
-      axiosForm.post('/me/', state)
-        .then((e) => {
-          console.log(e.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUserInfo.fulfilled, (state, action) => {
+        return { ...state, ...action.payload };
+      })
+      .addCase(fetchUserInfo.rejected, (state, action) => {
+        console.error('Failed to fetch user info:', action.payload);
+      });
   },
-})
+});
 
-
-export const { userInfo } = userSlice.actions
-
-export default userSlice.reducer
+export default userSlice.reducer;

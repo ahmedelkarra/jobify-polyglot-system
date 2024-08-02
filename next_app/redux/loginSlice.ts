@@ -20,7 +20,9 @@ export const counterSlice = createSlice({
       console.log(state)
       axiosForm.post('/login/', state)
         .then((e) => {
-          console.log(e.data)
+          const data = e.data as { token: string }
+          console.log(data?.token)
+          localStorage.setItem('token',`token ${data?.token}`)
         })
         .catch((err) => {
           console.log(err)

@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 function ProfileComponent() {
   const [valueInputs, setValueInputs] = useState({ first_name: "", last_name: "", email: "", username: "", password: "", new_password: "", confirm_new_password: "" })
   const select = useSelector((state: RootState) => state.me)
+  console.log(select);
 
   useEffect(() => {
     setValueInputs({ ...valueInputs, first_name: select?.first_name, last_name: select?.last_name, email: select?.email, username: select?.username })
