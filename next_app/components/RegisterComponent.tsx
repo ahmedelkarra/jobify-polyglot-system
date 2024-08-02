@@ -72,7 +72,7 @@ function RegisterComponent() {
               </div>
 
               <div className="col-span-6 sm:col-span-3">
-                <label htmlFor="Email" className="block text-sm font-medium text-gray-700"> Username </label>
+                <label htmlFor="Username" className="block text-sm font-medium text-gray-700"> Username </label>
 
                 <input
                   onChange={(e) => setValueInputs({ ...valueInputs, username: e.target.value })}
