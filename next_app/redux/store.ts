@@ -6,11 +6,13 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 import counterReducer from './counterSlice';
 import registerSlice from './registerSlice';
+import loginSlice from './loginSlice';
 
 const store = configureStore({
   reducer: {
     counter: counterReducer,
     auth: registerSlice,
+    login:loginSlice
   },
 });
 
