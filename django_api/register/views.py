@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from rest_framework.authtoken.models import Token
 import json
 
 # Create your views here.
@@ -35,8 +35,9 @@ def register(request):
                 )
                 user.set_password(password)
                 user.save()
-                login(request,user)
-                return JsonResponse({'message':'User has been created'},status=201)
+                Token.objects.filter(user=user).delete()
+                token = Token.objects.create(user=user)
+                return JsonResponse({'message':'User has been created','token':token},status=201)
             else:
                 return JsonResponse({'message': 'Please check your inputs'}, status=400)                    
         except:
