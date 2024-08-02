@@ -1,6 +1,17 @@
-import React from 'react'
+'use client'
+import { RootState } from '@/redux/store'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+
+
 
 function ProfileComponent() {
+  const [valueInputs, setValueInputs] = useState({ first_name: "", last_name: "", email: "", username: "", password: "", new_password: "", confirm_new_password: "" })
+  const select = useSelector((state: RootState) => state.me)
+
+  useEffect(() => {
+    setValueInputs({ ...valueInputs, first_name: select?.first_name, last_name: select?.last_name, email: select?.email, username: select?.username })
+  }, [select])
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg">
@@ -13,6 +24,8 @@ function ProfileComponent() {
 
             <div className="relative">
               <input
+                onChange={(e) => setValueInputs({ ...valueInputs, first_name: e.target.value })}
+                value={valueInputs?.first_name}
                 type="text"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="First Name"
@@ -25,6 +38,8 @@ function ProfileComponent() {
 
             <div className="relative">
               <input
+                onChange={(e) => setValueInputs({ ...valueInputs, last_name: e.target.value })}
+                value={valueInputs?.last_name}
                 type="text"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Last Name"
@@ -37,6 +52,8 @@ function ProfileComponent() {
 
             <div className="relative">
               <input
+                onChange={(e) => setValueInputs({ ...valueInputs, username: e.target.value })}
+                value={valueInputs?.username}
                 type="text"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Username"
@@ -49,6 +66,8 @@ function ProfileComponent() {
 
             <div className="relative">
               <input
+                onChange={(e) => setValueInputs({ ...valueInputs, email: e.target.value })}
+                value={valueInputs?.email}
                 type="email"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Email"
@@ -61,6 +80,8 @@ function ProfileComponent() {
 
             <div className="relative">
               <input
+                onChange={(e) => setValueInputs({ ...valueInputs, password: e.target.value })}
+                value={valueInputs?.password}
                 type="password"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Your Password"
@@ -74,6 +95,8 @@ function ProfileComponent() {
 
             <div className="relative">
               <input
+                onChange={(e) => setValueInputs({ ...valueInputs, new_password: e.target.value })}
+                value={valueInputs?.new_password}
                 type="password"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="New Password"
@@ -87,6 +110,8 @@ function ProfileComponent() {
 
             <div className="relative">
               <input
+                onChange={(e) => setValueInputs({ ...valueInputs, confirm_new_password: e.target.value })}
+                value={valueInputs?.confirm_new_password}
                 type="password"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="New Confilrm Password"
