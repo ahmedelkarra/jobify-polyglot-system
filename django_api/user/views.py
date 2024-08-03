@@ -16,7 +16,9 @@ def user_api(request):
         if request.method == 'GET':
             user = request.user
             if user.is_authenticated:
-                    return JsonResponse({'first_name':user.first_name,'last_name':user.last_name,'username': user.username,'email': user.email,}, status=200)
+                    isAdmin = user.is_superuser
+                    print(isAdmin)
+                    return JsonResponse({'first_name':user.first_name,'last_name':user.last_name,'username': user.username,'email': user.email,'isAdmin':isAdmin}, status=200)
             else:
                 return JsonResponse({'message': 'Unauthorized'}, status=401)
         elif request.method == 'PUT':
