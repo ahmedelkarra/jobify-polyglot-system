@@ -1,5 +1,5 @@
 'use client'
-import { submitProfile } from '@/redux/profileSlice'
+import { deleteProfile, submitProfile } from '@/redux/profileSlice'
 import { AppDispatch, RootState } from '@/redux/store'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -15,6 +15,10 @@ function ProfileComponent() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     dispatch(submitProfile(valueInputs))
+  }
+
+  const handleClick = () => {
+    dispatch(deleteProfile())
   }
   useEffect(() => {
     setValueInputs({ ...valueInputs, first_name: selector?.first_name, last_name: selector?.last_name, email: selector?.email, username: selector?.username })
@@ -126,13 +130,20 @@ function ProfileComponent() {
 
             </div>
           </div>
-
-          <button
-            type="submit"
-            className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
-          >
-            Submit
-          </button>
+          <div className='flex gap-1'>
+            <button
+              type="submit"
+              className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+            >
+              Submit
+            </button>
+            <button
+              onClick={handleClick}
+              className="block w-full rounded-lg bg-red-600 px-5 py-3 text-sm font-medium text-white"
+            >
+              Delete Account
+            </button>
+          </div>
         </form>
       </div>
     </div>

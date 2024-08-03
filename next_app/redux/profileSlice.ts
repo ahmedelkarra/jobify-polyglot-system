@@ -34,16 +34,34 @@ export const submitProfile = createAsyncThunk(
   }
 );
 
+export const deleteProfile = createAsyncThunk(
+  'profile/submitProfile',
+  async (_, { dispatch }) => {
+    const token = localStorage.getItem('token');
+    const response = await axiosForm.delete('/me/', { headers: { Authorization: `${token}` } });
+    const data = response.data as { message: string };
+    console.log(data.message);
+    dispatch(changeStatus(true));
+    return data;
+  }
+);
+
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(submitProfile.fulfilled, (state, action) => {
-      console.log('Profile successful:', action.payload);
+      console.log('Submit Profile successful:', action.payload);
     });
     builder.addCase(submitProfile.rejected, (state, action) => {
-      console.log('Profile failed:', action.error);
+      console.log('Submit Profile failed:', action.error);
+    });
+    builder.addCase(deleteProfile.fulfilled, (state, action) => {
+      console.log('Delete Profile successful:', action.payload);
+    });
+    builder.addCase(deleteProfile.rejected, (state, action) => {
+      console.log('Delete Profile failed:', action.error);
     });
   },
 });
