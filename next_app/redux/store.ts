@@ -1,6 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
-import { AppProps } from 'next/app';
 import { useDispatch } from 'react-redux';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
@@ -8,6 +6,7 @@ import counterReducer from './counterSlice';
 import registerSlice from './registerSlice';
 import loginSlice from './loginSlice';
 import userSlice from './userSlice';
+import statusSlice from './statusSlice';
 
 const store = configureStore({
   reducer: {
@@ -15,6 +14,7 @@ const store = configureStore({
     auth: registerSlice,
     login:loginSlice,
     me:userSlice,
+    status:statusSlice,
   },
 });
 
