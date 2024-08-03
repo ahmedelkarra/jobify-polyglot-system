@@ -1,5 +1,6 @@
-import { axiosForm } from '@/utils/axiosForm';
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {axiosForm} from '@/utils/axiosForm';
+import { changeStatus } from './statusSlice';
 
 export interface CounterState {
   username: string;
@@ -11,27 +12,27 @@ const initialState: CounterState = {
   password: "",
 }
 
-export const counterSlice = createSlice({
+export const submitLogin = createAsyncThunk(
+  'login/submitLogin',
+  async (credentials: { username: string, password: string }, { dispatch }) => {
+    const response = await axiosForm.post('/login/', credentials);
+    const data = response.data as { token: string };
+    localStorage.setItem('token', `token ${data?.token}`);
+    dispatch(changeStatus(true));
+    return data;
+  }
+);
+
+const counterSlice = createSlice({
   name: 'login',
   initialState,
-  reducers: {
-    submitLogin: (state, payload) => {
-      state = payload.payload
-      console.log(state)
-      axiosForm.post('/login/', state)
-        .then((e) => {
-          const data = e.data as { token: string }
-          console.log(data?.token)
-          localStorage.setItem('token',`token ${data?.token}`)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(submitLogin.fulfilled, (state, action) => {
+      state.username = action.meta.arg.username;
+      state.password = action.meta.arg.password;
+    });
   },
-})
+});
 
-
-export const { submitLogin } = counterSlice.actions
-
-export default counterSlice.reducer
+export default counterSlice.reducer;

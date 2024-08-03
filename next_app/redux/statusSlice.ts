@@ -12,8 +12,8 @@ export const statusSlice = createSlice({
   name: 'status',
   initialState,
   reducers: {
-    changeStatus: (state) => {
-      state.isChange = false
+    changeStatus: (state,actions) => {
+      state.isChange = actions.payload
     },
   },
 })
