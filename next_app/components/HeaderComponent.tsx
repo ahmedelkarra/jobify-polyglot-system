@@ -2,11 +2,28 @@
 import Link from 'next/link'
 import React from 'react'
 import logo from '@/public/logo.svg'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
+import { axiosForm } from '@/utils/axiosForm'
+import { changeStatus } from '@/redux/statusSlice'
 
 function HeaderComponent() {
     const selector = useSelector((state: RootState) => state?.me)
+    const dispatch = useDispatch()
+    console.log(selector)
+    const handleClick = () => {
+        const token = localStorage.getItem('token');
+        axiosForm.get('/me/logout/', { headers: { Authorization: `${token}` } })
+            .then((e) => {
+                const data = e.data as { message: string }
+                localStorage.removeItem('token')
+                console.log(data.message)
+                dispatch(changeStatus(true));
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
     return (
         <header className="bg-white">
             <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
@@ -31,7 +48,7 @@ function HeaderComponent() {
                                     <Link className="text-gray-500 transition hover:text-gray-500/75" href="/profile"> Profile</Link>
                                 </li>}
                                 {selector?.username && <li>
-                                    <button className="text-gray-500 transition hover:text-gray-500/75" > Logout</button>
+                                    <button className="text-gray-500 transition hover:text-gray-500/75" onClick={handleClick}> Logout</button>
                                 </li>}
                                 {selector?.isAdmin && <li>
                                     <Link className="text-gray-500 transition hover:text-gray-500/75" href="/admin/user-management"> Admin</Link>
