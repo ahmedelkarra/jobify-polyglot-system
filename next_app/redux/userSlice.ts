@@ -6,6 +6,7 @@ export interface IUserSlice {
   last_name: string;
   username: string;
   email: string;
+  isAdmin: boolean;
 }
 
 const initialState: IUserSlice = {
@@ -13,6 +14,7 @@ const initialState: IUserSlice = {
   last_name: "",
   username: "",
   email: "",
+  isAdmin: false
 };
 
 export const fetchUserInfo = createAsyncThunk<IUserSlice, void>(
@@ -22,7 +24,7 @@ export const fetchUserInfo = createAsyncThunk<IUserSlice, void>(
     try {
       const response = await axiosForm.get('/me/', { headers: { Authorization: `${token}` } });
       return response.data as IUserSlice;
-    } catch (error:any) {
+    } catch (error: any) {
       return rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
