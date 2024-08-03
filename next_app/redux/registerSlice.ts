@@ -1,7 +1,8 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosForm } from '@/utils/axiosForm';
-import { createSlice } from '@reduxjs/toolkit'
+import { changeStatus } from './statusSlice';
 
-export interface CounterState {
+export interface registerState {
   first_name: string;
   last_name: string;
   email: string;
@@ -10,36 +11,38 @@ export interface CounterState {
   confirmPassword: string;
 }
 
-const initialState: CounterState = {
+const initialState: registerState = {
   first_name: "",
   last_name: "",
   email: "",
   username: "",
   password: "",
   confirmPassword: ""
-}
+};
 
-export const counterSlice = createSlice({
+export const submitRegister = createAsyncThunk(
+  'register/submitRegister',
+  async (formData: registerState, { dispatch }) => {
+    const response = await axiosForm.post('/register/', formData);
+    const data = response.data as { token: string };
+    localStorage.setItem('token', `token ${data?.token}`);
+    dispatch(changeStatus(true));
+    return data;
+  }
+);
+
+const registerSlice = createSlice({
   name: 'register',
   initialState,
-  reducers: {
-    submitRegister: (state, payload) => {
-      state = payload.payload
-      console.log(state)
-      axiosForm.post('/register/', state)
-        .then((e) => {
-          const data = e.data as { token: string }
-          console.log(data)
-          localStorage.setItem('token',`token ${data?.token}`)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(submitRegister.fulfilled, (state, action) => {
+      console.log('Registration successful:', action.payload);
+    });
+    builder.addCase(submitRegister.rejected, (state, action) => {
+      console.log('Registration failed:', action.error);
+    });
   },
-})
+});
 
-
-export const { submitRegister } = counterSlice.actions
-
-export default counterSlice.reducer
+export default registerSlice.reducer;

@@ -4,20 +4,20 @@ import logo from '@/public/logo.svg'
 import { useDispatch } from 'react-redux'
 import { submitRegister } from '@/redux/registerSlice'
 import { useSelector } from 'react-redux'
-import { RootState } from '@/redux/store'
+import { AppDispatch, RootState } from '@/redux/store'
 
 
 
 function RegisterComponent() {
   const [valueInputs, setValueInputs] = useState({ first_name: "", last_name: "", email: "", username: "", password: "", confirmPassword: "" })
+  const dispatch = useDispatch<AppDispatch>()
   const selector = useSelector((state: RootState) => state.me)
-  const dispatch = useDispatch()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     dispatch(submitRegister(valueInputs))
   }
-  return !selector?.username &&(
+  return !selector?.username && (
     <section className="bg-white">
       <div className="lg:grid lg:grid-cols-12">
         <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
