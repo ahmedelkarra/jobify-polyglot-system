@@ -1,6 +1,8 @@
 'use client'
-import { RootState } from '@/redux/store'
+import { submitProfile } from '@/redux/profileSlice'
+import { AppDispatch, RootState } from '@/redux/store'
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 
 
@@ -8,16 +10,20 @@ import { useSelector } from 'react-redux'
 function ProfileComponent() {
   const [valueInputs, setValueInputs] = useState({ first_name: "", last_name: "", email: "", username: "", password: "", new_password: "", confirm_new_password: "" })
   const selector = useSelector((state: RootState) => state.me)
-  console.log(selector);
+  const dispatch = useDispatch<AppDispatch>()
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    dispatch(submitProfile(valueInputs))
+  }
   useEffect(() => {
     setValueInputs({ ...valueInputs, first_name: selector?.first_name, last_name: selector?.last_name, email: selector?.email, username: selector?.username })
   }, [selector])
-  return selector?.username &&(
+  return selector?.username && (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg">
 
-        <form action="#" className="mb-12 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
+        <form onSubmit={handleSubmit} className="mb-12 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
           <p className="text-center text-lg font-medium">Change your information</p>
 
           <div>
