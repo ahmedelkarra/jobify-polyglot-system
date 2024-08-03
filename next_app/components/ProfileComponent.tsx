@@ -7,13 +7,13 @@ import { useSelector } from 'react-redux'
 
 function ProfileComponent() {
   const [valueInputs, setValueInputs] = useState({ first_name: "", last_name: "", email: "", username: "", password: "", new_password: "", confirm_new_password: "" })
-  const select = useSelector((state: RootState) => state.me)
-  console.log(select);
+  const selector = useSelector((state: RootState) => state.me)
+  console.log(selector);
 
   useEffect(() => {
-    setValueInputs({ ...valueInputs, first_name: select?.first_name, last_name: select?.last_name, email: select?.email, username: select?.username })
-  }, [select])
-  return (
+    setValueInputs({ ...valueInputs, first_name: selector?.first_name, last_name: selector?.last_name, email: selector?.email, username: selector?.username })
+  }, [selector])
+  return selector?.username &&(
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg">
 

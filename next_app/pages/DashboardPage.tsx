@@ -1,8 +1,9 @@
+import DashboardComponent from '@/components/DashboardComponent'
 import React from 'react'
 
 function DashboardPage() {
   return (
-    <div>DashboardPage</div>
+    <DashboardComponent />
   )
 }
 

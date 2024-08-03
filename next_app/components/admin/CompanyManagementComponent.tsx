@@ -1,7 +1,11 @@
+'use client'
+import { RootState } from '@/redux/store'
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 function CompanyManagementComponent() {
-  return (
+  const selector = useSelector((state: RootState) => state?.me)
+  return selector?.isAdmin && (
     <div>CompanyManagementComponent</div>
   )
 }

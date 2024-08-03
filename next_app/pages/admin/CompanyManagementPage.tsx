@@ -1,8 +1,9 @@
+import CompanyManagementComponent from '@/components/admin/CompanyManagementComponent'
 import React from 'react'
 
 function CompanyManagementPage() {
   return (
-    <div>CompanyManagementPage</div>
+    <CompanyManagementComponent />
   )
 }
 

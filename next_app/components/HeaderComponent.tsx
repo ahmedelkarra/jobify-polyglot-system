@@ -1,8 +1,12 @@
+'use client'
 import Link from 'next/link'
 import React from 'react'
 import logo from '@/public/logo.svg'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
 
 function HeaderComponent() {
+    const selector = useSelector((state: RootState) => state?.me)
     return (
         <header className="bg-white">
             <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
@@ -20,18 +24,24 @@ function HeaderComponent() {
                                 <li>
                                     <Link className="text-gray-500 transition hover:text-gray-500/75" href="/"> Home</Link>
                                 </li>
-                                <li>
+                                {selector?.username && <li>
                                     <Link className="text-gray-500 transition hover:text-gray-500/75" href="/dashboard"> Dashboard</Link>
-                                </li>
-                                <li>
+                                </li>}
+                                {selector?.username && <li>
+                                    <Link className="text-gray-500 transition hover:text-gray-500/75" href="/profile"> Profile</Link>
+                                </li>}
+                                {selector?.username && <li>
+                                    <button className="text-gray-500 transition hover:text-gray-500/75" > Logout</button>
+                                </li>}
+                                {selector?.isAdmin && <li>
                                     <Link className="text-gray-500 transition hover:text-gray-500/75" href="/admin/user-management"> Admin</Link>
-                                </li>
+                                </li>}
                             </ul>
                         </nav>
                     </div>
 
                     <div className="flex items-center gap-4">
-                        <div className="sm:flex sm:gap-4">
+                        {!selector?.username && <div className="sm:flex sm:gap-4">
                             <Link
                                 className="rounded-md bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow"
                                 href="/login"
@@ -47,9 +57,9 @@ function HeaderComponent() {
                                     Register
                                 </Link>
                             </div>
-                        </div>
+                        </div>}
 
-                        <div className="block md:hidden">
+                        {!selector?.username && <div className="block md:hidden">
                             <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +72,7 @@ function HeaderComponent() {
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                                 </svg>
                             </button>
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </div>
