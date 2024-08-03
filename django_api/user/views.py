@@ -1,8 +1,9 @@
 from django.http import JsonResponse
-from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.authentication import TokenAuthentication
+from django.contrib.auth.models import User
+import json
 
 @csrf_exempt
 @api_view(['GET'])
@@ -16,3 +17,55 @@ def user_api(request):
             return JsonResponse({'message': 'Unauthorized'}, status=401)
     else:
         return JsonResponse({'message': 'Method not allowed'}, status=405)
+
+
+@csrf_exempt
+@api_view(['PUT','DELETE'])
+@authentication_classes([TokenAuthentication])
+def user_api(request):
+        data = json.loads(request.body)
+        first_name=data.get('first_name')
+        last_name=data.get('last_name')
+        email=data.get('email')
+        username=data.get('username')
+        password=data.get('password')
+        new_password=data.get('new_password')
+        confirm_new_password=data.get('confirm_new_password')
+        user = request.user
+        if request.method == 'PUT':
+            get_user = User.objects.filter(id=user.id).first()
+            pass_status = get_user.check_password(password)
+            if user.is_authenticated:
+                if pass_status and first_name and last_name and email and username and password and new_password != confirm_new_password:
+                    get_user.first_name=first_name
+                    get_user.last_name=last_name
+                    get_user.email=email
+                    get_user.username=username
+                    get_user.save()
+                    return JsonResponse({'message':'User has been updated'}, status=200)
+                elif pass_status and first_name and last_name and email and username and password and new_password and new_password == confirm_new_password:
+                    get_user.first_name=first_name
+                    get_user.last_name=last_name
+                    get_user.email=email
+                    get_user.username=username
+                    get_user.set_password(new_password)
+                    get_user.save()
+                    return JsonResponse({'message':'User has been updated'}, status=200)
+                elif not pass_status:
+                    return JsonResponse({'message': 'Wrong user name or password'}, status=400)
+                else:
+                    return JsonResponse({'message': 'Please check your inputs'}, status=400)
+            else:
+                return JsonResponse({'message': 'Unauthorized'}, status=401)
+        elif request.method == 'DELETE':
+                get_user = User.objects.filter(id=user.id).first()
+                pass_status = get_user.check_password(password)
+                if pass_status and password:
+                    get_user.delete()
+                    return JsonResponse({'message':'User has been deleted'}, status=200)
+                elif not pass_status:
+                    return JsonResponse({'message': 'Wrong user name or password'}, status=400)
+                else:
+                    return JsonResponse({'message': 'Please check your inputs'}, status=400)
+        else:
+            return JsonResponse({'message': 'Unauthorized'}, status=401)
