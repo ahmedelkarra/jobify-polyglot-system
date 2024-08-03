@@ -34,7 +34,7 @@ def user_api(request):
             get_user = User.objects.filter(id=user.id).first()
             pass_status = get_user.check_password(password)
             if user.is_authenticated:
-                if pass_status and first_name and last_name and email and username and password and new_password != confirm_new_password:
+                if pass_status and first_name and last_name and email and username and password and not new_password or not confirm_new_password:
                     get_user.first_name=first_name
                     get_user.last_name=last_name
                     get_user.email=email
