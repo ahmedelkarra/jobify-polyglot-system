@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.authentication import TokenAuthentication
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 import json
 
 
@@ -66,3 +67,12 @@ def user_api(request):
                     return JsonResponse({'message': 'Please check your inputs'}, status=400)
         else:
             return JsonResponse({'message': 'Unauthorized'}, status=401)
+
+
+@csrf_exempt
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+def user_api_logout(request):
+    user = request.user
+    Token.objects.filter(user=user).delete()
+    return JsonResponse({'message':'Logout successfully'}, status=200)
