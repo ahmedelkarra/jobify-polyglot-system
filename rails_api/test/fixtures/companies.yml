@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  owner_first_name: MyText
+  owner_last_name: MyText
+  company_name: MyText
+  email: MyText
+  username: MyText
+  website: MyText
+  password: MyText
+
+two:
+  owner_first_name: MyText
+  owner_last_name: MyText
+  company_name: MyText
+  email: MyText
+  username: MyText
+  website: MyText
+  password: MyText
