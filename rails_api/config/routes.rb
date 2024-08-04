@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  post '/api/auth/register/' , to: 'register#register_form' 
+  post '/api/auth/register/' , to: 'register#register_form'
+  post '/api/auth/login/' , to: 'login#login'
 end
