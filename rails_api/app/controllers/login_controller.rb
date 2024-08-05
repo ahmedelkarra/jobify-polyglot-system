@@ -14,6 +14,7 @@ class LoginController < ApplicationController
       password = company[:password]
       password_status = BCrypt::Password.new(password) == params[:password]
       payload = {
+        id: company.id,
         owner_first_name: company.owner_first_name,
         owner_last_name: company.owner_last_name,
         company_name: company.company_name,
