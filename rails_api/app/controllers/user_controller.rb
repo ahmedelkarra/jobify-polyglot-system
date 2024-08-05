@@ -16,7 +16,6 @@ class UserController < ApplicationController
           email: company.email,
           username: company.username,
           website: company.website,
-          password: company.password
         }
         if payload[:website] == nil
           payload[:website] = ''
