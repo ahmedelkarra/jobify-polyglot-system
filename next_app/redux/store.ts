@@ -7,6 +7,9 @@ import registerSlice from './registerSlice';
 import loginSlice from './loginSlice';
 import userSlice from './userSlice';
 import statusSlice from './statusSlice';
+import companyRegisterSlice from './companyRegisterSlice';
+import companySlice from './companySlice';
+import companyLoginSlice from './companyLoginSlice';
 
 const store = configureStore({
   reducer: {
@@ -15,6 +18,9 @@ const store = configureStore({
     login:loginSlice,
     me:userSlice,
     status:statusSlice,
+    companyRegister: companyRegisterSlice,
+    companyLogin:companyLoginSlice,
+    company:companySlice,
   },
 });
 
