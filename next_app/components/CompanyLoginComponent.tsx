@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import HeaderLogin from './HeaderLogin';
 
 function CompanyLoginComponent() {
-  const selector = useSelector((state: RootState) => state?.me);
+  const selectorMe = useSelector((state: RootState) => state?.me)
+  const selectorComapny = useSelector((state: RootState) => state?.company)
   const [valueInputs, setValueInputs] = useState({ username: "", password: "" });
   const dispatch: AppDispatch = useDispatch();
 
@@ -16,7 +17,7 @@ function CompanyLoginComponent() {
     dispatch(submitLoginCompany(valueInputs));
   };
 
-  return !selector.username && (
+  return !(selectorMe.username || selectorComapny?.username) && (
     <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg min-h-[100dvh] md:min-h-1">
         <HeaderLogin />
