@@ -4,6 +4,7 @@ import { RootState, AppDispatch } from '@/redux/store';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import HeaderLogin from './HeaderLogin';
 
 function CompanyLoginComponent() {
   const selector = useSelector((state: RootState) => state?.me);
@@ -16,12 +17,12 @@ function CompanyLoginComponent() {
   };
 
   return !selector.username && (
-    <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-lg">
+    <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-lg min-h-[100dvh] md:min-h-1">
+        <HeaderLogin />
         <h1 className="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">Get started</h1>
-
-        <form onSubmit={handleSubmit} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
-          <p className="text-center text-lg font-medium">Sign in to your account</p>
+        <form onSubmit={handleSubmit} className="mb-0 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
+          <p className="text-center text-lg font-medium">Sign in as a Company</p>
 
           <div>
             <label htmlFor="username" className="sr-only">Username</label>

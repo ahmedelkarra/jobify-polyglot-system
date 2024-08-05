@@ -12,11 +12,11 @@ function HeaderComponent() {
     const dispatch = useDispatch()
     console.log(selector)
     const handleClick = () => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('user_token');
         axiosForm.get('/me/logout/', { headers: { Authorization: `${token}` } })
             .then((e) => {
                 const data = e.data as { message: string }
-                localStorage.removeItem('token')
+                localStorage.removeItem('user_token')
                 console.log(data.message)
                 dispatch(changeStatus(true));
             })
