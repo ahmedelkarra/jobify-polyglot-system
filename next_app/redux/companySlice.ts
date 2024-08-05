@@ -22,7 +22,7 @@ const initialState: ICompanySlice = {
 export const fetchUserInfo = createAsyncThunk<ICompanySlice, void>(
   'me/fetchUserInfo',
   async (_, { rejectWithValue }) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('company_token');
     try {
       const response = await axiosForm.get('/me/', { headers: { Authorization: `${token}` } });
       return response.data as ICompanySlice;

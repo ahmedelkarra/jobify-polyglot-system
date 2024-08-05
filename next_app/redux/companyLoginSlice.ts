@@ -17,7 +17,7 @@ export const submitLoginCompany = createAsyncThunk(
   async (credentials: { username: string, password: string }, { dispatch }) => {
     const response = await axiosCompanyForm.post('/login/', credentials);
     const data = response.data as { token: string };
-    localStorage.setItem('token', `token ${data?.token}`);
+    localStorage.setItem('company_token', `token ${data?.token}`);
     dispatch(changeStatus(true));
     return data;
   }

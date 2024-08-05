@@ -25,7 +25,7 @@ const initialState: ProfileState = {
 export const submitProfile = createAsyncThunk(
   'profile/submitProfile',
   async (formData: ProfileState, { dispatch }) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('user_token');
     const response = await axiosForm.put('/me/', formData, { headers: { Authorization: `${token}` } });
     const data = response.data as { message: string };
     console.log(data.message)
@@ -37,7 +37,7 @@ export const submitProfile = createAsyncThunk(
 export const deleteProfile = createAsyncThunk(
   'profile/deleteProfile',
   async (_, { dispatch }) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('user_token');
     const response = await axiosForm.delete('/me/', { headers: { Authorization: `${token}` } });
     const data = response.data as { message: string };
     console.log(data.message);

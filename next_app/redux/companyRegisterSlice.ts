@@ -29,7 +29,7 @@ export const companySubmitRegister = createAsyncThunk(
   async (formData: companyRegisterState, { dispatch }) => {
     const response = await axiosForm.post('/register/', formData);
     const data = response.data as { token: string };
-    localStorage.setItem('token', `token ${data?.token}`);
+    localStorage.setItem('company_token', `token ${data?.token}`);
     dispatch(changeStatus(true));
     return data;
   }

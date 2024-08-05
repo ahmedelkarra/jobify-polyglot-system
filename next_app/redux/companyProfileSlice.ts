@@ -29,7 +29,7 @@ const initialState: companyProfileState = {
 export const companySubmitProfile = createAsyncThunk(
   'profile/companySubmitProfile',
   async (formData: companyProfileState, { dispatch }) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('company_token');
     const response = await axiosCompanyForm.put('/me/', formData, { headers: { Authorization: `${token}` } });
     const data = response.data as { message: string };
     console.log(data.message)
@@ -41,7 +41,7 @@ export const companySubmitProfile = createAsyncThunk(
 export const comapnyDeleteProfile = createAsyncThunk(
   'profile/companyDeleteProfile',
   async (_, { dispatch }) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('company_token');
     const response = await axiosCompanyForm.delete('/me/', { headers: { Authorization: `${token}` } });
     const data = response.data as { message: string };
     console.log(data.message);
