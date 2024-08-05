@@ -8,20 +8,19 @@ class UserController < ApplicationController
       begin
         decoded_token = JWT.decode(token,HMAC_SECRET,true,{ algorithm: 'HS256' }).first
         company = Company.find(decoded_token['id'])
-        payload = {
-          id: company.id,
-          owner_first_name: company.owner_first_name,
-          owner_last_name: company.owner_last_name,
-          company_name: company.company_name,
-          email: company.email,
-          username: company.username,
-          website: company.website,
-        }
         if payload[:website] == nil
           payload[:website] = ''
         end
         if company
-          render json: {'message': payload} , status: 200
+          render json: {
+            id: company.id,
+            owner_first_name: company.owner_first_name,
+            owner_last_name: company.owner_last_name,
+            company_name: company.company_name,
+            email: company.email,
+            username: company.username,
+            website: company.website,
+          } , status: 200
         else
           render json: {'message': 'Invalid token'} , status: 404
         end

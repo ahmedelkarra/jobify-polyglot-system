@@ -8,21 +8,30 @@ import { axiosForm } from '@/utils/axiosForm'
 import { changeStatus } from '@/redux/statusSlice'
 
 function HeaderComponent() {
-    const selector = useSelector((state: RootState) => state?.me)
+    const selectorMe = useSelector((state: RootState) => state?.me)
+    const selectorComapny = useSelector((state: RootState) => state?.company)
     const dispatch = useDispatch()
-    console.log(selector)
+    console.log(selectorMe)
+    console.log(selectorComapny)
     const handleClick = () => {
-        const token = localStorage.getItem('user_token');
-        axiosForm.get('/me/logout/', { headers: { Authorization: `${token}` } })
-            .then((e) => {
-                const data = e.data as { message: string }
-                localStorage.removeItem('user_token')
-                console.log(data.message)
-                dispatch(changeStatus(true));
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        const userToken = localStorage.getItem('user_token');
+        const companyToken = localStorage.getItem('company_token');
+        if (userToken) {
+            axiosForm.get('/me/logout/', { headers: { Authorization: `${userToken}` } })
+                .then((e) => {
+                    const data = e.data as { message: string }
+                    localStorage.removeItem('user_token')
+                    console.log(data.message)
+                    dispatch(changeStatus(true));
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+        if (companyToken) {
+            localStorage.removeItem('company_token')
+            dispatch(changeStatus(true));
+        }
     }
     return (
         <header className="bg-white">
@@ -41,16 +50,16 @@ function HeaderComponent() {
                                 <li>
                                     <Link className="text-gray-500 transition hover:text-gray-500/75" href="/"> Home</Link>
                                 </li>
-                                {selector?.username && <li>
+                                {selectorMe?.username || selectorComapny?.username && <li>
                                     <Link className="text-gray-500 transition hover:text-gray-500/75" href="/dashboard"> Dashboard</Link>
                                 </li>}
-                                {selector?.username && <li>
+                                {selectorMe?.username || selectorComapny?.username && <li>
                                     <Link className="text-gray-500 transition hover:text-gray-500/75" href="/profile"> Profile</Link>
                                 </li>}
-                                {selector?.username && <li>
+                                {selectorMe?.username || selectorComapny?.username && <li>
                                     <button className="text-gray-500 transition hover:text-gray-500/75" onClick={handleClick}> Logout</button>
                                 </li>}
-                                {selector?.isAdmin && <li>
+                                {selectorMe?.isAdmin  || selectorComapny?.username&& <li>
                                     <Link className="text-gray-500 transition hover:text-gray-500/75" href="/admin/user-management"> Admin</Link>
                                 </li>}
                             </ul>
@@ -58,7 +67,7 @@ function HeaderComponent() {
                     </div>
 
                     <div className="flex items-center gap-4">
-                        {!selector?.username && <div className="sm:flex sm:gap-4">
+                        {!selectorMe?.username || selectorComapny?.username && <div className="sm:flex sm:gap-4">
                             <Link
                                 className="rounded-md bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow"
                                 href="/login"
@@ -76,7 +85,7 @@ function HeaderComponent() {
                             </div>
                         </div>}
 
-                        {!selector?.username && <div className="block md:hidden">
+                        {!selectorMe?.username || selectorComapny?.username && <div className="block md:hidden">
                             <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
