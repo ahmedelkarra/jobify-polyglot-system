@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {axiosForm} from '@/utils/axiosForm';
 import { changeStatus } from './statusSlice';
+import { axiosCompanyForm } from '@/utils/axiosCompanyForm';
 
 export interface companyLoginState {
   username: string;
@@ -15,7 +15,7 @@ const initialState: companyLoginState = {
 export const submitLoginCompany = createAsyncThunk(
   'login/submitLogin',
   async (credentials: { username: string, password: string }, { dispatch }) => {
-    const response = await axiosForm.post('/login/', credentials);
+    const response = await axiosCompanyForm.post('/login/', credentials);
     const data = response.data as { token: string };
     localStorage.setItem('token', `token ${data?.token}`);
     dispatch(changeStatus(true));

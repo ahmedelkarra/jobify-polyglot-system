@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosForm } from '@/utils/axiosForm';
 import { changeStatus } from './statusSlice';
+import { axiosCompanyForm } from '@/utils/axiosCompanyForm';
 
 export interface companyProfileState {
   owner_first_name: string;
@@ -30,7 +30,7 @@ export const companySubmitProfile = createAsyncThunk(
   'profile/companySubmitProfile',
   async (formData: companyProfileState, { dispatch }) => {
     const token = localStorage.getItem('token');
-    const response = await axiosForm.put('/me/', formData, { headers: { Authorization: `${token}` } });
+    const response = await axiosCompanyForm.put('/me/', formData, { headers: { Authorization: `${token}` } });
     const data = response.data as { message: string };
     console.log(data.message)
     dispatch(changeStatus(true));
@@ -42,7 +42,7 @@ export const comapnyDeleteProfile = createAsyncThunk(
   'profile/companyDeleteProfile',
   async (_, { dispatch }) => {
     const token = localStorage.getItem('token');
-    const response = await axiosForm.delete('/me/', { headers: { Authorization: `${token}` } });
+    const response = await axiosCompanyForm.delete('/me/', { headers: { Authorization: `${token}` } });
     const data = response.data as { message: string };
     console.log(data.message);
     dispatch(changeStatus(true));
