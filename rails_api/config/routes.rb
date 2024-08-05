@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   post '/api/auth/register/' , to: 'register#register_form'
   post '/api/auth/login/' , to: 'login#login'
-  get '/api/auth/user/' , to: 'user#company_info'
-  put '/api/auth/user/' , to: 'user#company_update'
-  delete '/api/auth/user/' , to: 'user#company_delete'
+  get '/api/auth/me/' , to: 'user#company_info'
+  put '/api/auth/me/' , to: 'user#company_update'
+  delete '/api/auth/me/' , to: 'user#company_delete'
 end

@@ -5,6 +5,6 @@ dotenv.config()
 const host = process.env.NEXT_PUBLIC_DJANGO_HOST
 
 export const axiosForm = axios.create({
-    baseURL: `${host}/api/auth`,
-    withCredentials: true
+    baseURL: `http://127.0.0.1:3000/api/auth/`,
+    // withCredentials: true
 })
