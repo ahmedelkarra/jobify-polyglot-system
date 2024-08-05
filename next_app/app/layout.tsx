@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchUserInfo } from "@/redux/userSlice";
 import { changeStatus } from "@/redux/statusSlice";
+import { fetchCompanyInfo } from "@/redux/companySlice";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +19,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
   const status = useSelector((state: RootState) => state.status)
 
-  
+
   useEffect(() => {
     dispatch(fetchUserInfo() as any)
+    dispatch(fetchCompanyInfo() as any)
     dispatch(changeStatus(false))
   }, [status?.isChange]);
 

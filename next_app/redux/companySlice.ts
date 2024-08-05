@@ -1,4 +1,4 @@
-import { axiosForm } from '@/utils/axiosForm';
+import { axiosCompanyForm } from '@/utils/axiosCompanyForm';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export interface ICompanySlice {
@@ -19,12 +19,12 @@ const initialState: ICompanySlice = {
   website: '',
 };
 
-export const fetchUserInfo = createAsyncThunk<ICompanySlice, void>(
-  'me/fetchUserInfo',
+export const fetchCompanyInfo = createAsyncThunk<ICompanySlice, void>(
+  'me/fetchCompanyInfo',
   async (_, { rejectWithValue }) => {
     const token = localStorage.getItem('company_token');
     try {
-      const response = await axiosForm.get('/me/', { headers: { Authorization: `${token}` } });
+      const response = await axiosCompanyForm.get('/me/', { headers: { Authorization: `${token}` } });
       return response.data as ICompanySlice;
     } catch (error: any) {
       return rejectWithValue(error.response ? error.response.data : error.message);
@@ -38,17 +38,17 @@ export const companySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUserInfo.fulfilled, (state, action) => {
+      .addCase(fetchCompanyInfo.fulfilled, (state, action) => {
         return { ...state, ...action.payload };
       })
-      .addCase(fetchUserInfo.rejected, (state, action) => {
+      .addCase(fetchCompanyInfo.rejected, (state, action) => {
         state.owner_first_name = "",
           state.owner_last_name = "",
           state.email = "",
           state.username = "",
           state.company_name = '',
           state.website = '',
-          console.error('Failed to fetch user info:', action.payload);
+          console.error('Failed to fetch company info:', action.payload);
       });
   },
 });

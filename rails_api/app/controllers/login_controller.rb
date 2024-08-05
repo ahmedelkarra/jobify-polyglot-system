@@ -25,7 +25,7 @@ class LoginController < ApplicationController
       }
       token = JWT.encode(payload, HMAC_SECRET, 'HS256')
       if password_status
-        render json: {'message': token}
+        render json: {'token': token}
       else
       render json: {'message': 'Wrong username or password'} , status: 404
       end

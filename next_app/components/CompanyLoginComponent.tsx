@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-function LoginComponent() {
+function CompanyLoginComponent() {
   const selector = useSelector((state: RootState) => state?.me);
   const [valueInputs, setValueInputs] = useState({ username: "", password: "" });
   const dispatch: AppDispatch = useDispatch();
@@ -106,4 +106,4 @@ function LoginComponent() {
   );
 }
 
-export default LoginComponent;
+export default CompanyLoginComponent;

@@ -8,7 +8,7 @@ import { companyRegisterState, companySubmitRegister } from '@/redux/companyRegi
 
 
 
-function RegisterComponent() {
+function CompanyRegisterComponent() {
   const [valueInputs, setValueInputs] = useState<companyRegisterState>({
     owner_first_name: "",
     owner_last_name: "",
@@ -176,4 +176,4 @@ function RegisterComponent() {
   )
 }
 
-export default RegisterComponent
+export default CompanyRegisterComponent

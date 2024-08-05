@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 
 
 
-function ProfileComponent() {
+function CompanyProfileComponent() {
   const [valueInputs, setValueInputs] = useState<companyProfileState>({
     owner_first_name: "",
     owner_last_name: "",
@@ -168,4 +168,4 @@ function ProfileComponent() {
   )
 }
 
-export default ProfileComponent
+export default CompanyProfileComponent
