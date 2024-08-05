@@ -8,9 +8,6 @@ class UserController < ApplicationController
       begin
         decoded_token = JWT.decode(token,HMAC_SECRET,true,{ algorithm: 'HS256' }).first
         company = Company.find(decoded_token['id'])
-        if payload[:website] == nil
-          payload[:website] = ''
-        end
         if company
           render json: {
             id: company.id,
