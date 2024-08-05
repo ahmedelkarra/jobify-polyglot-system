@@ -10,8 +10,7 @@ export interface companyRegisterState {
   company_name: string;
   website: string;
   password: string;
-  new_password: string;
-  confirm_new_password: string;
+  confirm_password: string;
 }
 
 const initialState: companyRegisterState = {
@@ -22,11 +21,10 @@ const initialState: companyRegisterState = {
   company_name: '',
   website: '',
   password: "",
-  new_password: "",
-  confirm_new_password: ""
+  confirm_password: ""
 };
 
-export const submitRegister = createAsyncThunk(
+export const companySubmitRegister = createAsyncThunk(
   'register/submitRegister',
   async (formData: companyRegisterState, { dispatch }) => {
     const response = await axiosForm.post('/register/', formData);
@@ -42,10 +40,10 @@ const companyRegisterSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(submitRegister.fulfilled, (state, action) => {
+    builder.addCase(companySubmitRegister.fulfilled, (state, action) => {
       console.log('Registration successful:', action.payload);
     });
-    builder.addCase(submitRegister.rejected, (state, action) => {
+    builder.addCase(companySubmitRegister.rejected, (state, action) => {
       console.log('Registration failed:', action.error);
     });
   },

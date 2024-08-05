@@ -35,7 +35,7 @@ export const submitProfile = createAsyncThunk(
 );
 
 export const deleteProfile = createAsyncThunk(
-  'profile/submitProfile',
+  'profile/deleteProfile',
   async (_, { dispatch }) => {
     const token = localStorage.getItem('token');
     const response = await axiosForm.delete('/me/', { headers: { Authorization: `${token}` } });

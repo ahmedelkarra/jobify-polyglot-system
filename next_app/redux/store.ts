@@ -10,17 +10,21 @@ import statusSlice from './statusSlice';
 import companyRegisterSlice from './companyRegisterSlice';
 import companySlice from './companySlice';
 import companyLoginSlice from './companyLoginSlice';
+import companyProfileSlice from './companyProfileSlice';
+import profileSlice from './profileSlice';
 
 const store = configureStore({
   reducer: {
     counter: counterReducer,
     auth: registerSlice,
-    login:loginSlice,
-    me:userSlice,
-    status:statusSlice,
+    login: loginSlice,
+    profile: profileSlice,
+    me: userSlice,
+    status: statusSlice,
     companyRegister: companyRegisterSlice,
-    companyLogin:companyLoginSlice,
-    company:companySlice,
+    companyLogin: companyLoginSlice,
+    companyProfile: companyProfileSlice,
+    company: companySlice,
   },
 });
 

@@ -3,8 +3,8 @@ import { axiosForm } from '@/utils/axiosForm';
 import { changeStatus } from './statusSlice';
 
 export interface companyProfileState {
-  owner_first_name: "",
-  owner_last_name: "",
+  owner_first_name: string;
+  owner_last_name: string;
   email: string;
   username: string;
   company_name: string;
@@ -19,15 +19,15 @@ const initialState: companyProfileState = {
   owner_last_name: "",
   email: "",
   username: "",
-  company_name: '',
-  website: '',
+  company_name: "",
+  website: "",
   password: "",
   new_password: "",
   confirm_new_password: ""
 }
 
-export const submitProfile = createAsyncThunk(
-  'profile/submitProfile',
+export const companySubmitProfile = createAsyncThunk(
+  'profile/companySubmitProfile',
   async (formData: companyProfileState, { dispatch }) => {
     const token = localStorage.getItem('token');
     const response = await axiosForm.put('/me/', formData, { headers: { Authorization: `${token}` } });
@@ -38,8 +38,8 @@ export const submitProfile = createAsyncThunk(
   }
 );
 
-export const deleteProfile = createAsyncThunk(
-  'profile/submitProfile',
+export const comapnyDeleteProfile = createAsyncThunk(
+  'profile/companyDeleteProfile',
   async (_, { dispatch }) => {
     const token = localStorage.getItem('token');
     const response = await axiosForm.delete('/me/', { headers: { Authorization: `${token}` } });
@@ -55,16 +55,16 @@ const companyProfileSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(submitProfile.fulfilled, (state, action) => {
+    builder.addCase(companySubmitProfile.fulfilled, (state, action) => {
       console.log('Submit Profile successful:', action.payload);
     });
-    builder.addCase(submitProfile.rejected, (state, action) => {
+    builder.addCase(companySubmitProfile.rejected, (state, action) => {
       console.log('Submit Profile failed:', action.error);
     });
-    builder.addCase(deleteProfile.fulfilled, (state, action) => {
+    builder.addCase(comapnyDeleteProfile.fulfilled, (state, action) => {
       console.log('Delete Profile successful:', action.payload);
     });
-    builder.addCase(deleteProfile.rejected, (state, action) => {
+    builder.addCase(comapnyDeleteProfile.rejected, (state, action) => {
       console.log('Delete Profile failed:', action.error);
     });
   },
