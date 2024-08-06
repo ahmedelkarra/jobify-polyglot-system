@@ -1,9 +1,13 @@
+import CompanyProfilePage from '@/pages/CompanyProfilePage'
 import ProfilePage from '@/pages/ProfilePage'
 import React from 'react'
 
 function page() {
     return (
-        <ProfilePage />
+        <div>
+            <ProfilePage />
+            <CompanyProfilePage />
+        </div>
     )
 }
 
