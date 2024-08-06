@@ -2,7 +2,7 @@ import React from 'react'
 
 function FooterComponent() {
     return (
-        <div className="border-t flex flex-col justify-center items-center absolute bottom-0 w-[100%]">
+        <div className="border-t flex flex-col justify-center items-center">
             <div>
                 <h2>Welcome to Jobify website</h2>
             </div>

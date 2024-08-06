@@ -13,32 +13,30 @@ import { fetchCompanyInfo } from "@/redux/companySlice";
 
 const inter = Inter({ subsets: ["latin"] });
 
-
-
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
-  const status = useSelector((state: RootState) => state.status)
-
+  const status = useSelector((state: RootState) => state.status);
 
   useEffect(() => {
-    dispatch(fetchUserInfo() as any)
-    dispatch(fetchCompanyInfo() as any)
-    dispatch(changeStatus(false))
+    dispatch(fetchUserInfo() as any);
+    dispatch(fetchCompanyInfo() as any);
+    dispatch(changeStatus(false));
   }, [status?.isChange]);
 
   return (
     <>
       <html lang="en">
-        <body className={`${inter.className} relative min-h-[100dvh]`}>
+        <body className={`${inter.className} min-h-[100dvh] flex flex-col`}>
           <HeaderComponent />
-          {children}
+          <div className="flex-grow">
+            {children}
+          </div>
           <FooterComponent />
         </body>
       </html>
     </>
   );
 };
-
 
 export default function RootLayout({
   children,

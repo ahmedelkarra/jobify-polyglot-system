@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/redux/store'
 import { companyRegisterState, companySubmitRegister } from '@/redux/companyRegisterSlice'
+import HeaderRegister from './HeaderRegister'
 
 
 
@@ -27,7 +28,8 @@ function CompanyRegisterComponent() {
     dispatch(companySubmitRegister(valueInputs))
   }
   return !selector?.username && (
-    <section className="bg-white">
+    <section className="bg-white my-5">
+      <HeaderRegister />
       <div className="lg:grid lg:grid-cols-12">
         <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
           <img
@@ -56,7 +58,7 @@ function CompanyRegisterComponent() {
             <form onSubmit={handleSubmit} className="mt-8 grid grid-cols-6 gap-6">
               <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="FirstName" className="block text-sm font-medium text-gray-700">
-                Owner First Name
+                  Owner First Name
                 </label>
 
                 <input
@@ -70,7 +72,7 @@ function CompanyRegisterComponent() {
 
               <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="owner_last_name" className="block text-sm font-medium text-gray-700">
-                Owner Last Name
+                  Owner Last Name
                 </label>
 
                 <input
@@ -107,6 +109,30 @@ function CompanyRegisterComponent() {
               </div>
 
               <div className="col-span-6 sm:col-span-3">
+                <label htmlFor="Company-Name" className="block text-sm font-medium text-gray-700"> Company Name </label>
+
+                <input
+                  onChange={(e) => setValueInputs({ ...valueInputs, company_name: e.target.value })}
+                  type="text"
+                  id="Company-Name"
+                  name="Company Name"
+                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm p-1"
+                />
+              </div>
+
+              <div className="col-span-6 sm:col-span-3">
+                <label htmlFor="Website" className="block text-sm font-medium text-gray-700"> Website </label>
+
+                <input
+                  onChange={(e) => setValueInputs({ ...valueInputs, website: e.target.value })}
+                  type="text"
+                  id="Website"
+                  name="Website"
+                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm p-1"
+                />
+              </div>
+
+              <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="Password" className="block text-sm font-medium text-gray-700"> Password </label>
 
                 <input
@@ -132,20 +158,6 @@ function CompanyRegisterComponent() {
                 />
               </div>
 
-              <div className="col-span-6">
-                <label htmlFor="MarketingAccept" className="flex gap-4">
-                  <input
-                    type="checkbox"
-                    id="MarketingAccept"
-                    name="marketing_accept"
-                    className="size-5 rounded-md border-gray-200 bg-white shadow-sm"
-                  />
-
-                  <span className="text-sm text-gray-700">
-                    I want to receive emails about events, product updates and company announcements.
-                  </span>
-                </label>
-              </div>
 
               <div className="col-span-6">
                 <p className="text-sm text-gray-500">

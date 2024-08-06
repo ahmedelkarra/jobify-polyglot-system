@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosForm } from '@/utils/axiosForm';
 import { changeStatus } from './statusSlice';
+import { axiosCompanyForm } from '@/utils/axiosCompanyForm';
 
 export interface companyRegisterState {
   owner_first_name: string;
@@ -27,7 +27,7 @@ const initialState: companyRegisterState = {
 export const companySubmitRegister = createAsyncThunk(
   'register/submitRegister',
   async (formData: companyRegisterState, { dispatch }) => {
-    const response = await axiosForm.post('/register/', formData);
+    const response = await axiosCompanyForm.post('/register/', formData);
     const data = response.data as { token: string };
     localStorage.setItem('company_token', `token ${data?.token}`);
     dispatch(changeStatus(true));
