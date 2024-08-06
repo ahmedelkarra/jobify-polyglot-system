@@ -5,11 +5,15 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import HeaderLogin from './HeaderLogin';
+import HandleError from './HandleError';
+import HandleSuccess from './HandleSuccess';
 
 function CompanyLoginComponent() {
   const selectorMe = useSelector((state: RootState) => state?.me)
   const selectorComapny = useSelector((state: RootState) => state?.company)
   const [valueInputs, setValueInputs] = useState({ username: "", password: "" });
+  const successMessage = useSelector((state: RootState) => state?.companyLogin?.successMessage)
+  const errorMessage = useSelector((state: RootState) => state?.companyLogin?.errorMessage)
   const dispatch: AppDispatch = useDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,6 +25,8 @@ function CompanyLoginComponent() {
     <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg min-h-[100dvh] md:min-h-1">
         <HeaderLogin />
+        <HandleSuccess successMessage={successMessage} />
+        <HandleError errorMessage={errorMessage}/>
         <h1 className="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">Get started</h1>
         <form onSubmit={handleSubmit} className="mb-0 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
           <p className="text-center text-lg font-medium">Sign in as a Company</p>

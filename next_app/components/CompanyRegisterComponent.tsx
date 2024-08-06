@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/redux/store'
 import { companyRegisterState, companySubmitRegister } from '@/redux/companyRegisterSlice'
 import HeaderRegister from './HeaderRegister'
+import HandleSuccess from './HandleSuccess'
+import HandleError from './HandleError'
 
 
 
@@ -22,14 +24,20 @@ function CompanyRegisterComponent() {
   })
   const dispatch = useDispatch<AppDispatch>()
   const selector = useSelector((state: RootState) => state.me)
+  const successMessage = useSelector((state: RootState) => state?.companyLogin?.successMessage)
+  const errorMessage = useSelector((state: RootState) => state?.companyLogin?.errorMessage)
 
+  
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     dispatch(companySubmitRegister(valueInputs))
+    console.log(errorMessage);
   }
   return !selector?.username && (
     <section className="bg-white my-5">
       <HeaderRegister />
+      <HandleSuccess successMessage={successMessage} />
+      <HandleError errorMessage={errorMessage}/>
       <div className="lg:grid lg:grid-cols-12">
         <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
           <img
