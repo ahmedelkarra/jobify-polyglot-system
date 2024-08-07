@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosForm } from '@/utils/axiosForm';
 import { changeStatus } from './statusSlice';
+import { clearMessages, handelError, handelSuccess } from './messageSlice';
 
 export interface registerState {
   first_name: string;
@@ -23,11 +24,22 @@ const initialState: registerState = {
 export const submitRegister = createAsyncThunk(
   'register/submitRegister',
   async (formData: registerState, { dispatch }) => {
-    const response = await axiosForm.post('/register/', formData);
-    const data = response.data as { token: string };
-    localStorage.setItem('user_token', `token ${data?.token}`);
-    dispatch(changeStatus(true));
-    return data;
+    try {
+      const response = await axiosForm.post('/register/', formData);
+      const data = response.data as { token: string };
+      localStorage.setItem('user_token', `token ${data?.token}`);
+      dispatch(handelSuccess('User has been created'))
+      setTimeout(() => {
+        dispatch(clearMessages())
+        dispatch(changeStatus(true));
+      }, 2000)
+      return data;
+    } catch (error: any) {
+      setTimeout(() => {
+        dispatch(clearMessages())
+      }, 2000)
+      return dispatch(handelError(error.response?.data?.message || 'An error occurred'))
+    }
   }
 );
 
@@ -37,10 +49,6 @@ const registerSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(submitRegister.fulfilled, (state, action) => {
-      console.log('Registration successful:', action.payload);
-    });
-    builder.addCase(submitRegister.rejected, (state, action) => {
-      console.log('Registration failed:', action.error);
     });
   },
 });

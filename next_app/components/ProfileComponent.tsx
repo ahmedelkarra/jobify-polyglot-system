@@ -4,6 +4,8 @@ import { AppDispatch, RootState } from '@/redux/store'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
+import HandleSuccess from './HandleSuccess'
+import HandleError from './HandleError'
 
 
 
@@ -11,6 +13,8 @@ function ProfileComponent() {
   const [valueInputs, setValueInputs] = useState({ first_name: "", last_name: "", email: "", username: "", password: "", new_password: "", confirm_new_password: "" })
   const selector = useSelector((state: RootState) => state.me)
   const dispatch = useDispatch<AppDispatch>()
+  const successMessage = useSelector((state: RootState) => state?.message?.successMessage)
+  const errorMessage = useSelector((state: RootState) => state?.message?.errorMessage)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -29,6 +33,8 @@ function ProfileComponent() {
 
         <form onSubmit={handleSubmit} className="mb-12 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
           <p className="text-center text-lg font-medium">Change your information</p>
+          <HandleSuccess successMessage={successMessage} />
+          <HandleError errorMessage={errorMessage} />
 
           <div>
             <label htmlFor="first_name" className="sr-only">first name</label>

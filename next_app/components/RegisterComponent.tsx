@@ -6,6 +6,8 @@ import { submitRegister } from '@/redux/registerSlice'
 import { useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/redux/store'
 import HeaderRegister from './HeaderRegister'
+import HandleSuccess from './HandleSuccess'
+import HandleError from './HandleError'
 
 
 
@@ -13,6 +15,8 @@ function RegisterComponent() {
   const [valueInputs, setValueInputs] = useState({ first_name: "", last_name: "", email: "", username: "", password: "", confirmPassword: "" })
   const dispatch = useDispatch<AppDispatch>()
   const selector = useSelector((state: RootState) => state.me)
+  const successMessage = useSelector((state: RootState) => state?.message?.successMessage)
+  const errorMessage = useSelector((state: RootState) => state?.message?.errorMessage)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -38,6 +42,8 @@ function RegisterComponent() {
               <span className="sr-only">Home</span>
               <img src={logo.src} alt="logo" className='h-32' />
 
+              <HandleSuccess successMessage={successMessage} />
+              <HandleError errorMessage={errorMessage} />
               <h1 className="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
                 Welcome to Jobify
               </h1>

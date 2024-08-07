@@ -28,7 +28,7 @@ function CompanyRegisterComponent() {
   const successMessage = useSelector((state: RootState) => state?.message?.successMessage)
   const errorMessage = useSelector((state: RootState) => state?.message?.errorMessage)
 
-  
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     dispatch(companySubmitRegister(valueInputs))
@@ -36,8 +36,6 @@ function CompanyRegisterComponent() {
   return !selector?.username && (
     <section className="bg-white my-5">
       <HeaderRegister />
-      <HandleSuccess successMessage={successMessage} />
-      <HandleError errorMessage={errorMessage}/>
       <div className="lg:grid lg:grid-cols-12">
         <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
           <img
@@ -48,12 +46,14 @@ function CompanyRegisterComponent() {
         </aside>
 
         <main
-          className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
+          className="flex flex-col items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
         >
           <div className="max-w-xl lg:max-w-3xl">
             <span className="sr-only">Home</span>
             <img src={logo.src} alt="logo" className='h-32' />
 
+            <HandleSuccess successMessage={successMessage} />
+            <HandleError errorMessage={errorMessage} />
             <h1 className="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
               Welcome to Jobify
             </h1>

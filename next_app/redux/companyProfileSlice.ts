@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { changeStatus } from './statusSlice';
 import { axiosCompanyForm } from '@/utils/axiosCompanyForm';
+import { clearMessages, handelError, handelSuccess } from './messageSlice';
 
 export interface companyProfileState {
   owner_first_name: string;
@@ -29,24 +30,44 @@ const initialState: companyProfileState = {
 export const companySubmitProfile = createAsyncThunk(
   'profile/companySubmitProfile',
   async (formData: companyProfileState, { dispatch }) => {
-    const token = localStorage.getItem('company_token');
-    const response = await axiosCompanyForm.put('/me/', formData, { headers: { Authorization: `${token}` } });
-    const data = response.data as { message: string };
-    console.log(data.message)
-    dispatch(changeStatus(true));
-    return data;
+    try {
+      const token = localStorage.getItem('company_token');
+      const response = await axiosCompanyForm.put('/me/', formData, { headers: { Authorization: `${token}` } });
+      const data = response.data as { message: string };
+      dispatch(handelSuccess('Profile has been changed'))
+      setTimeout(() => {
+        dispatch(clearMessages())
+        dispatch(changeStatus(true));
+      }, 2000)
+      return data;
+    } catch (error: any) {
+      setTimeout(() => {
+        dispatch(clearMessages())
+      }, 2000)
+      return dispatch(handelError(error.response?.data?.message || 'An error occurred'))
+    }
   }
 );
 
 export const comapnyDeleteProfile = createAsyncThunk(
   'profile/companyDeleteProfile',
   async (_, { dispatch }) => {
-    const token = localStorage.getItem('company_token');
-    const response = await axiosCompanyForm.delete('/me/', { headers: { Authorization: `${token}` } });
-    const data = response.data as { message: string };
-    console.log(data.message);
-    dispatch(changeStatus(true));
-    return data;
+    try {
+      const token = localStorage.getItem('company_token');
+      const response = await axiosCompanyForm.delete('/me/', { headers: { Authorization: `${token}` } });
+      const data = response.data as { message: string };
+      dispatch(handelSuccess('Profile has been deleted'))
+      setTimeout(() => {
+        dispatch(clearMessages())
+        dispatch(changeStatus(true));
+      }, 2000)
+      return data;
+    } catch (error: any) {
+      setTimeout(() => {
+        dispatch(clearMessages())
+      }, 2000)
+      return dispatch(handelError(error.response?.data?.message || 'An error occurred'))
+    }
   }
 );
 

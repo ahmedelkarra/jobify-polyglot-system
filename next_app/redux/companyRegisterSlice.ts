@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { changeStatus } from './statusSlice';
 import { axiosCompanyForm } from '@/utils/axiosCompanyForm';
+import { clearMessages, handelError, handelSuccess } from './messageSlice';
 
 export interface companyRegisterState {
   owner_first_name: string;
@@ -27,11 +28,22 @@ const initialState: companyRegisterState = {
 export const companySubmitRegister = createAsyncThunk(
   'register/submitRegister',
   async (formData: companyRegisterState, { dispatch }) => {
-    const response = await axiosCompanyForm.post('/register/', formData);
-    const data = response.data as { token: string };
-    localStorage.setItem('company_token', `token ${data?.token}`);
-    dispatch(changeStatus(true));
-    return data;
+    try {
+      const response = await axiosCompanyForm.post('/register/', formData);
+      const data = response.data as { token: string };
+      localStorage.setItem('company_token', `token ${data?.token}`);
+      dispatch(handelSuccess('Login successfully'))
+      setTimeout(() => {
+        dispatch(clearMessages())
+        dispatch(changeStatus(true));
+      }, 2000)
+      return data;
+    } catch (error: any) {
+      setTimeout(() => {
+        dispatch(clearMessages())
+      }, 2000)
+      return dispatch(handelError(error.response?.data?.message || 'An error occurred'))
+    }
   }
 );
 
@@ -41,10 +53,6 @@ const companyRegisterSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(companySubmitRegister.fulfilled, (state, action) => {
-      console.log('Registration successful:', action.payload);
-    });
-    builder.addCase(companySubmitRegister.rejected, (state, action) => {
-      console.log('Registration failed:', action.error);
     });
   },
 });
