@@ -2,7 +2,7 @@ import React from 'react'
 
 function HandleSuccess({ successMessage }: { successMessage: string }) {
     return successMessage && (
-        <div role="alert" className="rounded-xl border border-gray-100 bg-white p-4 my-3">
+        <div role="alert" className="col-span-12 rounded-xl border border-gray-100 bg-white p-4 my-3">
             <div className="flex items-start gap-4">
                 <span className="text-green-600">
                     <svg
