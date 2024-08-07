@@ -22,7 +22,7 @@ class UserController < ApplicationController
           render json: {'message': 'Invalid token'} , status: 404
         end
       rescue
-        render json: {'message': 'Invalid token'} , status: 404
+        render json: {'message': 'hi'} , status: 200
       end
     else
       render json: {'message': 'Token is missing'} , status: 400

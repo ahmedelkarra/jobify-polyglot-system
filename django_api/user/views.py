@@ -21,7 +21,7 @@ def user_api(request):
                     print(isAdmin)
                     return JsonResponse({'first_name':user.first_name,'last_name':user.last_name,'username': user.username,'email': user.email,'isAdmin':isAdmin}, status=200)
             else:
-                return JsonResponse({'message': 'Unauthorized'}, status=401)
+                return JsonResponse({'message': 'hi'}, status=200)
         elif request.method == 'PUT':
             data = json.loads(request.body)
             first_name=data.get('first_name')
