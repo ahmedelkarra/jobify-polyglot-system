@@ -24,7 +24,7 @@ class RegisterController < ApplicationController
     if company.save
       render json: { message: 'Company has been created' }, status: :created
     else
-      render json: { errors: company.errors.full_messages }, status: :unprocessable_entity
+      render json: { message: company.errors.full_messages[0] }, status: :unprocessable_entity
     end
   end
 end
