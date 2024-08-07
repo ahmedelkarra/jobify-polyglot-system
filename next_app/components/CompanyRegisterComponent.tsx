@@ -8,6 +8,7 @@ import { companyRegisterState, companySubmitRegister } from '@/redux/companyRegi
 import HeaderRegister from './HeaderRegister'
 import HandleSuccess from './HandleSuccess'
 import HandleError from './HandleError'
+import { clearMessages } from '@/redux/messageSlice'
 
 
 
@@ -24,14 +25,13 @@ function CompanyRegisterComponent() {
   })
   const dispatch = useDispatch<AppDispatch>()
   const selector = useSelector((state: RootState) => state.me)
-  const successMessage = useSelector((state: RootState) => state?.companyLogin?.successMessage)
-  const errorMessage = useSelector((state: RootState) => state?.companyLogin?.errorMessage)
+  const successMessage = useSelector((state: RootState) => state?.message?.successMessage)
+  const errorMessage = useSelector((state: RootState) => state?.message?.errorMessage)
 
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     dispatch(companySubmitRegister(valueInputs))
-    console.log(errorMessage);
   }
   return !selector?.username && (
     <section className="bg-white my-5">

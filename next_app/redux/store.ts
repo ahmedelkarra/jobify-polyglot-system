@@ -12,6 +12,7 @@ import companySlice from './companySlice';
 import companyLoginSlice from './companyLoginSlice';
 import companyProfileSlice from './companyProfileSlice';
 import profileSlice from './profileSlice';
+import messageSlice from './messageSlice';
 
 const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ const store = configureStore({
     companyLogin: companyLoginSlice,
     companyProfile: companyProfileSlice,
     company: companySlice,
+    message: messageSlice,
   },
 });
 

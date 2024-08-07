@@ -1,19 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { changeStatus } from './statusSlice';
 import { axiosCompanyForm } from '@/utils/axiosCompanyForm';
+import { handelSuccess, handelError, clearMessages } from './messageSlice';
 
 export interface CompanyLoginState {
   username: string;
   password: string;
-  successMessage: string;
-  errorMessage: string;
 }
 
 const initialState: CompanyLoginState = {
   username: "",
   password: "",
-  successMessage: "",
-  errorMessage: "",
 }
 
 export const submitLoginCompany = createAsyncThunk(
@@ -21,12 +18,19 @@ export const submitLoginCompany = createAsyncThunk(
   async (credentials: { username: string, password: string }, { dispatch }) => {
     try {
       const response = await axiosCompanyForm.post('/login/', credentials);
-      const data = response.data as { token: string };
+      const data = response.data as { token: string, message: string };
       localStorage.setItem('company_token', `${data?.token}`);
-      dispatch(changeStatus(true));
+      dispatch(handelSuccess('Login successfully'))
+      setTimeout(() => {
+        dispatch(clearMessages())
+        dispatch(changeStatus(true));
+      }, 2000)
       return data;
     } catch (error: any) {
-      return Promise.reject(error.response?.data?.message || 'An error occurred');
+      setTimeout(() => {
+        dispatch(clearMessages())
+      }, 2000)
+      return dispatch(handelError(error.response?.data?.message || 'An error occurred'))
     }
   }
 );
@@ -40,15 +44,7 @@ const companyLoginSlice = createSlice({
       .addCase(submitLoginCompany.fulfilled, (state, action) => {
         state.username = action.meta.arg.username;
         state.password = action.meta.arg.password;
-        state.successMessage = 'Login successful!';
-        state.errorMessage = '';
-        console.log(state.successMessage)
       })
-      .addCase(submitLoginCompany.rejected, (state, action) => {
-        state.errorMessage = action.error.message || 'Login failed';
-        state.successMessage = '';
-        console.log(state.errorMessage)
-      });
   },
 });
 
