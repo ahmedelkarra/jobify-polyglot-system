@@ -11,8 +11,7 @@ function HeaderComponent() {
     const selectorMe = useSelector((state: RootState) => state?.me)
     const selectorComapny = useSelector((state: RootState) => state?.company)
     const dispatch = useDispatch()
-    console.log(selectorMe)
-    console.log(selectorComapny)
+
     const handleClick = () => {
         const userToken = localStorage.getItem('user_token');
         const companyToken = localStorage.getItem('company_token');

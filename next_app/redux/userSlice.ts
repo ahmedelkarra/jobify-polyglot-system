@@ -45,7 +45,6 @@ export const userSlice = createSlice({
         state.username = ''
         state.email = ''
         state.isAdmin = false
-        console.error('Failed to fetch user info:', action.payload);
       });
   },
 });

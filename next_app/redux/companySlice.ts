@@ -47,8 +47,7 @@ export const companySlice = createSlice({
           state.email = "",
           state.username = "",
           state.company_name = '',
-          state.website = '',
-          console.error('Failed to fetch company info:', action.payload);
+          state.website = ''
       });
   },
 });
