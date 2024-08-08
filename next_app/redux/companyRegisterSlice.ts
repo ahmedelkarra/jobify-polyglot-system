@@ -32,7 +32,7 @@ export const companySubmitRegister = createAsyncThunk(
       const response = await axiosCompanyForm.post('/register/', formData);
       const data = response.data as { token: string };
       localStorage.setItem('company_token', `token ${data?.token}`);
-      dispatch(handelSuccess('Login successfully'))
+      dispatch(handelSuccess('Register successfully'))
       setTimeout(() => {
         dispatch(clearMessages())
         dispatch(changeStatus(true));
