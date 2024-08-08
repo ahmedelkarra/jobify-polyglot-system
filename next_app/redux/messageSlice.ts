@@ -20,7 +20,6 @@ const messageSlice = createSlice({
       state.successMessage = action.payload
     },
     handelError: (state, action) => {
-      console.log(`From messageSlice ${action.payload}`);
       state.successMessage = ''
       state.errorMessage = action.payload
     },

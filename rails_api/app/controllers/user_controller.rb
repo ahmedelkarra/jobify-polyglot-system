@@ -39,14 +39,14 @@ class UserController < ApplicationController
     password=params[:password]
     new_password=params[:new_password]
     confirm_new_password=params[:confirm_new_password]
-    if owner_first_name and owner_last_name and email and username and company_name and password and not new_password or not confirm_new_password
+    if owner_first_name.strip != "" && owner_last_name.strip != "" && email.strip != "" && username.strip != "" && company_name.strip != "" && password.strip != "" && new_password.strip == ""
       begin
         token = request.headers['Authorization']
         decoded_token = JWT.decode(token,HMAC_SECRET,true,{ algorithm: 'HS256' }).first
         company = Company.find(decoded_token['id'])
         password = company[:password]
         password_status = BCrypt::Password.new(password) == params[:password]
-        if company and password_status
+        if company && password_status
           company.update(owner_first_name: owner_first_name , owner_last_name: owner_last_name , email: email , username: username , company_name: company_name ,)
           render json: {'message': 'Company has been updated'} , status: 200
         elsif password_status == false
@@ -54,11 +54,11 @@ class UserController < ApplicationController
         else
           render json: {'message': 'Invalid token'} , status: 404
         end
-      rescue StandardError => e
+      rescue St&&ardError => e
         puts e
         render json: {'message': 'Invalid token'} , status: 404
       end
-      elsif owner_first_name and owner_last_name and email and username and company_name and password and new_password and new_password == confirm_new_password
+    elsif owner_first_name.strip != "" && owner_last_name.strip != "" && email.strip != "" && username.strip != "" && company_name.strip != "" && password.strip != "" && new_password.strip != "" && (new_password == confirm_new_password)
         begin
           token = request.headers['Authorization']
           decoded_token = JWT.decode(token,HMAC_SECRET,true,{ algorithm: 'HS256' }).first
@@ -66,7 +66,7 @@ class UserController < ApplicationController
           password = company[:password]
           password_status = BCrypt::Password.new(password) == params[:password]
           hash_password = BCrypt::Password.create(new_password)
-          if company and password_status
+          if company && password_status
             company.update(owner_first_name: owner_first_name , owner_last_name: owner_last_name , email: email , username: username , company_name: company_name , password: hash_password)
             render json: {'message': 'Company has been updated'} , status: 200
           elsif password_status == false
@@ -74,7 +74,7 @@ class UserController < ApplicationController
           else
             render json: {'message': 'Invalid token'} , status: 404
           end
-        rescue StandardError => e
+        rescue St&&ardError => e
           puts e
           render json: {'message': 'Invalid token'} , status: 404
         end
@@ -87,28 +87,29 @@ class UserController < ApplicationController
 
   def company_delete
     password=params[:password]
-    if password
+    puts password
+    if password.strip != ""
       begin
         token = request.headers['Authorization']
-        decoded_token = JWT.decode(token,HMAC_SECRET,true,{ algorithm: 'HS256' }).first
+        decoded_token = JWT.decode(token, HMAC_SECRET, true, { algorithm: 'HS256' }).first
         company = Company.find(decoded_token['id'])
-        password = company[:password]
-        password_status = BCrypt::Password.new(password) == params[:password]
-        if company and password_status
+        stored_password = company[:password]
+        password_status = BCrypt::Password.new(stored_password) == password
+        puts token
+        if password_status
           company.delete
-          render json: {'message': 'Company has been deleted'} , status: 200
-        elsif password_status == false
-          render json: {'message': 'Worng username or password'} , status: 404
+          render json: { 'message': 'Company has been deleted' }, status: 200
         else
-          render json: {'message': 'Invalid token'} , status: 404
+          render json: { 'message': 'Wrong username or password' }, status: 404
         end
       rescue StandardError => e
         puts e
-        render json: {'message': 'Invalid token'} , status: 404
+        render json: { 'message': 'Invalid token' }, status: 404
       end
     else
-      render json: {'message': 'Please check your inputs'} , status: 400
+      render json: { 'message': 'Please check your inputs' }, status: 400
     end
   end
+  
 
 end

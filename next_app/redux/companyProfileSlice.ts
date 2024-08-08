@@ -51,22 +51,26 @@ export const companySubmitProfile = createAsyncThunk(
 
 export const comapnyDeleteProfile = createAsyncThunk(
   'profile/companyDeleteProfile',
-  async (_, { dispatch }) => {
+  async (formData: companyProfileState, { dispatch }) => {
     try {
       const token = localStorage.getItem('company_token');
-      const response = await axiosCompanyForm.delete('/me/', { headers: { Authorization: `${token}` } });
-      const data = response.data as { message: string };
+      const headers = { Authorization: `${token}` };
+      const response = await axiosCompanyForm.delete('/me/', {
+        headers,
+        data: formData
+      });
+      const responseData = response.data as { message: string };
       dispatch(handelSuccess('Profile has been deleted'))
       setTimeout(() => {
         dispatch(clearMessages())
         dispatch(changeStatus(true));
       }, 2000)
-      return data;
+      return responseData;
     } catch (error: any) {
       setTimeout(() => {
         dispatch(clearMessages())
       }, 2000)
-      return dispatch(handelError(error.response?.data?.message || 'An error occurred'))
+      return dispatch(handelError(error.response?.data?.message))
     }
   }
 );
@@ -77,16 +81,8 @@ const companyProfileSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(companySubmitProfile.fulfilled, (state, action) => {
-      console.log('Submit Profile successful:', action.payload);
-    });
-    builder.addCase(companySubmitProfile.rejected, (state, action) => {
-      console.log('Submit Profile failed:', action.error);
     });
     builder.addCase(comapnyDeleteProfile.fulfilled, (state, action) => {
-      console.log('Delete Profile successful:', action.payload);
-    });
-    builder.addCase(comapnyDeleteProfile.rejected, (state, action) => {
-      console.log('Delete Profile failed:', action.error);
     });
   },
 });

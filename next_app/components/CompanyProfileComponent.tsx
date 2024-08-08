@@ -32,7 +32,7 @@ function CompanyProfileComponent() {
   }
 
   const handleClick = () => {
-    dispatch(comapnyDeleteProfile())
+    dispatch(comapnyDeleteProfile(valueInputs))
   }
   useEffect(() => {
     setValueInputs({
@@ -190,6 +190,7 @@ function CompanyProfileComponent() {
               Submit
             </button>
             <button
+              type='button'
               onClick={handleClick}
               className="block w-full rounded-lg bg-red-600 px-5 py-3 text-sm font-medium text-white"
             >
