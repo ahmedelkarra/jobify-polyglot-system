@@ -5,4 +5,5 @@ class Company < ApplicationRecord
   validates :username, presence: true , uniqueness: true
   validates :company_name, presence: true , uniqueness: true
   validates :password, presence: true , uniqueness: true , length: {minimum: 7}
+  has_many :jobs
 end
