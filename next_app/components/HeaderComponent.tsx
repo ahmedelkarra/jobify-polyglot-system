@@ -55,6 +55,9 @@ function HeaderComponent() {
                                 {(selectorMe?.username || selectorComapny?.username) && <li>
                                     <Link className="text-gray-500 transition hover:text-gray-500/75" href="/profile"> Profile</Link>
                                 </li>}
+                                {(selectorComapny?.username) && <li>
+                                    <Link className="text-gray-500 transition hover:text-gray-500/75" href="/company-management"> Add Job</Link>
+                                </li>}
                                 {(selectorMe?.username || selectorComapny?.username) && <li>
                                     <button className="text-gray-500 transition hover:text-gray-500/75" onClick={handleClick}> Logout</button>
                                 </li>}
