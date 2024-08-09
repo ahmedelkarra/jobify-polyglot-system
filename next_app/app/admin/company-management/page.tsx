@@ -1,4 +1,4 @@
-import CompanyManagementPage from '@/pages/admin/CompanyManagementPage'
+import CompanyManagementPage from '@/pages/company/CompanyManagementPage'
 import React from 'react'
 
 function page() {

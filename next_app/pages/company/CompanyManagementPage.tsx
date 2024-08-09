@@ -1,4 +1,4 @@
-import CompanyManagementComponent from '@/components/admin/CompanyManagementComponent'
+import CompanyManagementComponent from '@/components/CompanyManagementComponent'
 import React from 'react'
 
 function CompanyManagementPage() {
